@@ -1,1 +1,28 @@
-<p>home works!</p>
+<div ngbAccordion>
+	<div ngbAccordionItem [collapsed]="false">
+		<h2 ngbAccordionHeader class="bg-lightblue">
+			<button class="activeGame" (click)="flip(0)" [style.background-color]="active[0] ? 'rgba(25, 9, 227, 0.22)' : 'rgba(25, 9, 227, 1)'"  ngbAccordionButton>
+        <span> Learn </span>
+      </button>
+		</h2>
+		<div ngbAccordionCollapse>
+			<div ngbAccordionBody>
+				<ng-template>
+				</ng-template>
+			</div>
+		</div>
+	</div>
+	<div ngbAccordionItem>
+    <h2 ngbAccordionHeader>
+      <button (click)="flip(1)" [style.background-color]="active[1] ? 'rgba(6,255,35,1)' : 'rgba(6,255, 35, 0.25)'"  ngbAccordionButton>
+        <span> Games </span>
+			</button>
+		</h2>
+		<div ngbAccordionCollapse>
+			<div ngbAccordionBody>
+        <app-menu/>
+      </div>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,9 @@
+
+
+activeGame {
+  background: rgba(6, 254, 35, 1);
+}
+
+notActiveGame {
+  background: rgba(6, 254, 35, 0.24);
+}

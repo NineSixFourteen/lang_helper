@@ -1,0 +1,18 @@
+<div (click)="goToPage()" class="col-3 full">
+  <div class="card" style="width: 18rem;">
+    <h5 class="card-title"> {{title}} </h5>
+    <img class="card-img-top image" src={{src}} alt={{altText}}>
+    <div class="card-body cardBody">
+      <div class="card-text">
+        <span *ngFor="let text of body">
+          <div [style.margin-left]="grabTabs(text.tab)">
+            <span [class]="text.class" [style]="text.style" >
+              {{text.text}}
+            </span>
+            <br *ngIf="text.newline">
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+.image{
+  padding-top: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.card-title {
+  padding-top: 10px;
+  text-align: center;
+  font-size: x-large;
+  font-weight: bolder;
+  font-family: monospace;
+}
+
+.tab {
+    display: inline-block;
+    margin-left: 2em;
+}
+
+.card{
+  cursor: pointer;
+}
+
+.full :hover {
+  background: lightgrey;
+}
+
+.full :active {
+  background: grey;
+}

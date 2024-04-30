@@ -1,0 +1,34 @@
+
+.image :hover{
+  background: grey;
+}
+
+.card-title {
+  padding-top: 10px;
+  text-align: center;
+  font-size: x-large;
+  font-weight: bolder;
+  font-family: monospace;
+  color: white;
+}
+
+.buttonT {
+  background: darkslategray;
+}
+
+.buttonT :hover{
+  background: gray;
+}
+
+.buttonT :active {
+  background: slategray;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.border1 {
+  border: black 1rem solid;
+}
+
