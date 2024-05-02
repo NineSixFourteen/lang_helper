@@ -11,26 +11,73 @@
   border-left: darkslategray solid 3px;
   border-right: darkslategray solid 3px;
     position: fixed;
+  background: rgba(50 50, 50, 0.2);
     left: 0;
     top: 8rem;
-    height: 100%;
-    width: 10rem;
+    bottom: 6rem;
+    width: 15rem;
+    overflow-y: auto;
+  }
+
+.databar{
+  border-left: darkslategray solid 3px;
+  border-right: darkslategray solid 3px;
+    position: fixed;
+  background: rgba(50 50, 50, 0.2);
+    right: 0;
+    top: 8rem;
+    bottom: 6rem;
+    width: 20rem;
 }
 
 .mainScreen {
-  align-items: center;
-  justify-items: center;
-  margin-left: 10rem;
+    overflow-y: auto;
+    margin-left: 5rem;
+    margin-top:13rem;
+    display: grid;
+    justify-items: center;
 }
 
 .controller {
   border: darkslategray solid 3px;
   position: fixed;
   left: 0;
-  height: 10%;
+  height: 4rem;
   bottom: 2rem;
   width: 100%;
   background-color: blueviolet;
   color: white;
+  text-align: center;
+}
+
+.speedButton {
+  width: 5rem
+}
+
+.correct {
+  background: green;
+}
+
+.wrong {
+  background: red;
+}
+
+.historySec {
+  max-height: 19rem;
+}
+
+.statsSec {
+  max-height: 22rem;;
+}
+
+.historyCorrect {
+  background: green;
+  font-size: x-large;
+  text-align: center;
+}
+
+.historyWrong {
+  background: red;
+  font-size: x-large;
   text-align: center;
 }

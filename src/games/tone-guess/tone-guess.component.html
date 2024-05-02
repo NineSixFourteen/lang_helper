@@ -18,21 +18,98 @@
   />
 </div>
 </div>
-
 <div *ngIf="!notSelectedDifficulty">
-  <div class="topbar">
 
-  </div>
-  <div class="sidebar">
-
-  </div>
-  <div class="mainScreen">
-    <div style="width: 30rem;height: 30rem;background:darkgray;">
-
+  <div class="topbar" style="text-align: center;color: wheat;font-size: 50px; padding-top: 0px; display: flex; align-items: center; justify-content: space-between; ">
+    <span style="padding-left: 25px; color: white;font-size: 60px; "> Guess The Tone </span>
+    <div style="display: contents;">
+      <span style="margin-left: -6.5rem;"> Score: {{correctGuess + "/" + totalGuess }}</span>
+      <span style="padding-right: 120px;"> Mode: {{ !difficulty ? "FLR": "1-6"}}</span>
     </div>
   </div>
-  <div class="controller">
 
+<div id="MiddleOfPage" style="display: inline;" >
+  <div class="sidebar">
+    <br>
+    <span style=" font-size: x-large; padding-left: 20px; text-align: center;margin-top: 2rem; font-weight: 700;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Word List</span>
+    <br>
+    <br>
+    <div style="display:flex; justify-content: space-evenly;" *ngFor="let word of wordList">
+      <span style="width: 70px; font-size: larger; font-weight: 700;"> {{word}} </span>
+      <div class="form-check form-switch">
+        <input (click)="toggle(word)" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+      </div>
+    </div>
+    <br>
+    <div style="display:ruby">
+      <span style=" font-size: x-large; font-weight: 700;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Playback speed</span>
+    </div>
+    <br><br>
+    <div class="btn-group btn-group-vertical btn-group-toggle" style="padding-left: 50px;"  data-toggle="buttons">
+      <label style="margin-left:-1px;" class="btn btn-secondary speedButton" [ngClass]="{'active':speed == 0.25}" >
+        <input type="radio" name="options" id="option1" autocomplete="off" (click)="setSpeed(0.25)"> 0.25
+      </label>
+      <label class="btn btn-secondary speedButton" [ngClass]="{'active':speed == 0.5}" >
+        <input (click)="setSpeed(0.5)" type="radio" name="options" id="option2" autocomplete="off"> 0.5
+      </label>
+      <label class="btn btn-secondary speedButton" [ngClass]="{'active':speed == 0.75}" >
+        <input (click)="setSpeed(0.75)" type="radio" name="options" id="option3" autocomplete="off"> 0.75
+      </label>
+      <label class="btn btn-secondary speedButton " [ngClass]="{'active':speed == 1}" >
+        <input (click)="setSpeed(1)" type="radio" name="options" id="option4" autocomplete="off" checked> 1
+      </label>
+    </div>
+  </div>
 
+  <div class="mainScreen">
+    <div style="width: 30rem;height: 30rem;">
+      <button (click)="playSound()" style=" margin-left: 66px; display: grid; align-content: center;justify-content: center;  width: 15rem; height: 15rem; padding: 7rem; border-radius: 500px;" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+        <mat-icon style="transform: scale(10); ">play_circle</mat-icon>
+      </button>
+      <br>
+      <br>
+      <span  *ngIf="displayText != ''" [ngClass]=" isCorrect ? 'correct' : 'wrong'" style="font-size: xxx-large; padding-left: 125px; padding-right: 125px;border: 5px black solid;border-radius: 20px;"> {{displayText}} </span>
+    </div>
+  </div>
+
+  <div class="databar">
+    <mat-expansion-panel hideToggle class="historySec">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span style="font-size: xx-large; text-align: center;padding-left: 3rem;height: 2rem;"> History </span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div style="height: 17rem; display: flex;justify-content:center;align-content: flex-start; flex-wrap: wrap; overflow-y: auto;scrollbar-width: thin;">
+      <div style="width:10rem;padding-top:0.2rem;height: 2rem; border: 2px black solid;"*ngFor="let guess of guesses.reverse(); index as i" [ngClass]="guess.wasCorrect ? 'historyCorrect' : 'historyWrong'" >
+        {{i+1}}.{{guess.word + guess.tone}}
+      </div>
+  </div>
+</mat-expansion-panel>
+    <mat-expansion-panel hideToggle class="statsSec">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+        <span style="padding-top:0.3rem; font-size: xx-large; text-align: center;padding-left: 3rem;height: 2rem;"> Stats</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div style="font-size: x-large ;">
+    <span> Accuracy:<br> <span style="padding-left: 1rem;">{{((correctGuess/totalGuess) * 100).toFixed(2) }}%</span> </span><br><br>
+    <span> Worst Word:<br> <span style="padding-left: 1rem;">{{getWorstWord()}}</span></span><br><br>
+    <span> Worst Tone:<br><span style="padding-left: 1rem;">{{getWorstTone()}}</span></span><br><br>
+    <span> Top 3 Worst <br>
+      <span style="padding-left: 1rem;" *ngFor="let word of getWorstCombos(3)">
+        {{word.word}}:  {{word.count}} Mistakes <br>
+      </span>
+      <br>
+    </span>
+  </div>
+</mat-expansion-panel>
+</div>
+
+  <div class="controller" style="display: flex;justify-content: space-around;">
+    <div  *ngFor="let button of buttons; index as i " >
+      <button (click)="doAction(i)" [style.width.rem]="buttonWidth" style="margin:1rem; text-align: center; background: skyblue; font-size: x-large; border-radius: 30px;">
+        {{ button}}
+      </button>
+    </div>
   </div>
 </ div>
