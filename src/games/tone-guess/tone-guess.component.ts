@@ -3,11 +3,14 @@ import { DifficultyButtonComponent } from './difficulty-button/difficulty-button
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import {MatAccordion, MatExpansionModule} from '@angular/material/expansion';
-
+import {
+  MatSlideToggleModule,
+} from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-tone-guess',
   standalone: true,
-  imports: [DifficultyButtonComponent, CommonModule, MatIconModule, MatAccordion, MatExpansionModule],
+  imports: [DifficultyButtonComponent, CommonModule, MatIconModule, MatAccordion, MatExpansionModule, MatSlideToggleModule, FormsModule],
   templateUrl: './tone-guess.component.html',
   styleUrl: './tone-guess.component.css'
 })
@@ -30,6 +33,19 @@ export class ToneGuessComponent {
       "zou",
       "kaa",
     ],
+    this.wordToggle = [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+    ]
     this.guesses = []
     this.speed = 1;
     this.isCorrect= false;
@@ -45,8 +61,9 @@ export class ToneGuessComponent {
     this.worstWord = new Map();
     this.worstTones = new Map();
     this.worstCombos = new Map();
+    this.tog = false;
   }
-
+  tog: boolean
   worstTones:Map<number,number>;
   worstWord:Map<string, number>;
   worstCombos:Map<string,number>;
@@ -57,6 +74,7 @@ export class ToneGuessComponent {
   isCorrect: boolean;
   speed: number
   wordList:string[];
+  wordToggle: boolean[];
   notSelectedDifficulty: boolean
   difficulty: boolean;
   sound : any;
@@ -164,21 +182,38 @@ export class ToneGuessComponent {
     this.buttonWidth = 14;
   }
 
-  toggle(val: string) {
-    console.log(val)
+  toggleAll(){
+    for(let i in this.wordToggle){
+      this.wordToggle[i] = true;
+    }
+  }
+
+  unsetAll(){
+    this.tog = false;
+  }
+
+  toggle(val: number) {
+    this.wordToggle[val] = !this.wordToggle[val]
   }
 
   setSpeed(val:number) {
+    this.sound.playbackRate = val
     this.speed = val;
   }
 
   getRandomWord() {
-    let num = Math.floor(Math.random() * 10);
+    let num = Math.floor(Math.random() * 11);
+    if(this.wordToggle.filter(x => x === true).length == 0){
+      return
+    }
+    while(!this.wordToggle[num]){
+      num = Math.floor(Math.random() * 11);
+    }
     this.word = this.wordList[num];
-    this.tone = Math.floor(Math.random() * 5) + 1;
+    this.tone = Math.floor(Math.random() * 6) + 1;
     if(this.word == "sik"){
       while(![1,3,6].includes(this.tone)){
-        this.tone = Math.floor(Math.random() * 5) + 1;
+        this.tone = Math.floor(Math.random() * 6) + 1;
       }
     }
   }
