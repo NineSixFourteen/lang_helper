@@ -44,3 +44,5 @@ Thumbs.db
 # Sound Assets
 
 src/assets/*
+.env
+*/environments/*

@@ -23,7 +23,7 @@
   <div class="topbar" style="text-align: center;color: wheat;font-size: 50px; padding-top: 0px; display: flex; align-items: center; justify-content: space-between; ">
     <span style="padding-left: 25px; color: white;font-size: 60px; "> Guess The Tone </span>
     <div style="display: contents;">
-      <span style="margin-left: -6.5rem;"> Score: {{correctGuess + "/" + totalGuess }}</span>
+      <span style="margin-left: -6.5rem;"> Score: {{Stats.correctGuess + "/" + Stats.totalGuess }}</span>
       <span style="padding-right: 120px;"> Mode: {{ !difficulty ? "FLR": "1-6"}}</span>
     </div>
   </div>
@@ -35,13 +35,13 @@
       <div style="display:flex; "class="form-check form-switch">
         <span style="width: 70px; font-size: larger; font-weight: 700;"> Select All </span>
         <p>
-        <mat-slide-toggle [(ngModel)]="tog" style="padding-left: 2rem;" (change)="toggleAll()"></mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="tog" style="padding-left: 2rem;" (change)="Words.setAllTrue()"></mat-slide-toggle>
         </p>
     </div>
-    <div style="display:flex; justify-content: space-evenly;" *ngFor="let word of wordList; index as i">
+    <div style="display:flex; justify-content: space-evenly;" *ngFor="let word of Words.WordList; index as i">
       <span style="width: 70px; font-size: larger; font-weight: 700;"> {{word}} </span>
       <p>
-      <mat-slide-toggle [(ngModel)]="wordToggle[i]" (change)="unsetAll()"></mat-slide-toggle>
+      <mat-slide-toggle [(ngModel)]="Words.WordStatus[i]" (change)="unsetAll()"></mat-slide-toggle>
       </p>
     </div>
     <br>
@@ -84,8 +84,8 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <div style="height: 17rem; display: flex;justify-content:center;align-content: flex-start; flex-wrap: wrap; overflow-y: auto;scrollbar-width: thin;">
-      <div style="width:10rem;padding-top:0.2rem;height: 2rem; border: 2px black solid;"*ngFor="let guess of guesses.reverse(); index as i" [ngClass]="guess.wasCorrect ? 'historyCorrect' : 'historyWrong'" >
-        {{i+1}}.{{guess.word + guess.tone}}
+      <div style="width:10rem;padding-top:0.2rem;height: 2rem; border: 2px black solid;"*ngFor="let guess of Stats.getHistory().reverse(); index as i" [ngClass]="guess.correct ? 'historyCorrect' : 'historyWrong'" >
+        {{i+1}}.{{guess.word }}
       </div>
   </div>
 </mat-expansion-panel>
@@ -96,12 +96,12 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <div style="font-size: x-large ;">
-    <span> Accuracy:<br> <span style="padding-left: 1rem;">{{((correctGuess/totalGuess) * 100).toFixed(2) }}%</span> </span><br><br>
-    <span> Worst Word:<br> <span style="padding-left: 1rem;">{{getWorstWord()}}</span></span><br><br>
-    <span> Worst Tone:<br><span style="padding-left: 1rem;">{{getWorstTone()}}</span></span><br><br>
+    <span> Accuracy:<br> <span style="padding-left: 1rem;">{{((Stats.correctGuess/Stats.totalGuess) * 100).toFixed(2) }}%</span> </span><br><br>
+    <span> Worst Word:<br> <span style="padding-left: 1rem;">{{Stats.getWorstWord()}}</span></span><br><br>
+    <span> Worst Tone:<br><span style="padding-left: 1rem;">{{Stats.getWorstTone()}}</span></span><br><br>
     <span> Top 3 Worst <br>
-      <span style="padding-left: 1rem;" *ngFor="let word of getWorstCombos(3)">
-        {{word.word}}:  {{word.count}} Mistakes <br>
+      <span style="padding-left: 1rem;" *ngFor="let word of Stats.getWorstCombos()">
+        {{word.word}}:  {{word.occurance}} Mistakes <br>
       </span>
       <br>
     </span>
